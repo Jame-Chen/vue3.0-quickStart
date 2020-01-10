@@ -13,3 +13,8 @@ export default {
 }
 </script>
 <style src='@/assets/css/normalize.css'></style>
+<style scoped>
+  #app{
+    height:100%;
+  }
+</style>
