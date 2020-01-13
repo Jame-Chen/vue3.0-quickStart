@@ -159,6 +159,25 @@ export default {
   components: {
   },
   methods: {
+    stime: function () {
+      let _this = this;
+      //30秒轮播一次
+      _this.getteam();
+      _this.getrank();
+      _this.getdizhu();
+      _this.getroyal();
+      $(".content").hide().eq(_this.index).show();
+      window.clearInterval(_this.timer);
+      _this.timer = setInterval(function () {
+        _this.getteam();
+        _this.getrank();
+        _this.getdizhu();
+        _this.getroyal();
+        _this.index = (_this.index == 1) ? 0 : _this.index + 1;
+        //某个div显示，其他的隐藏
+        $(".content").hide().eq(_this.index).show();
+      }, 30000);
+    },
     play: function () {
       let _this = this;
       _this.flag = !_this.flag;
@@ -166,13 +185,7 @@ export default {
         $(".play").css(
           { "background": "url(\"/img/btn_index_zant.png\") no-repeat", "background-size": "100% 100%" }
         );
-        //30秒轮播一次
-        _this.timer = '';
-        _this.timer = setInterval(function () {
-          _this.index = (_this.index == 1) ? 0 : _this.index + 1;
-          //某个div显示，其他的隐藏
-          $(".content").hide().eq(_this.index).show();
-        }, 30000);
+        _this.stime();
       } else {
         $(".play").css(
           { "background": "url(\"/img/btn_index_play.png\") no-repeat", "background-size": "100% 100%" }
@@ -183,12 +196,12 @@ export default {
     prev: function () {
       let _this = this;
       _this.index = (_this.index == 0) ? 1 : _this.index - 1;
-      $(".content").hide().eq(_this.index).show();
+      _this.stime();
     },
     next: function () {
       let _this = this;
       _this.index = (_this.index == 1) ? 0 : _this.index + 1;
-      $(".content").hide().eq(_this.index).show();
+      _this.stime();
     },
     getteam: function () {
       get("t_dept_score/get", {}).then(res => {
@@ -231,12 +244,6 @@ export default {
     _this.getrank();
     _this.getdizhu();
     _this.getroyal();
-    setInterval(function () {
-      _this.getteam();
-      _this.getrank();
-      _this.getdizhu();
-      _this.getroyal();
-    }, 10000)
   }
 }
 </script>
