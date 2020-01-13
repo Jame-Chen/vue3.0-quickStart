@@ -1,8 +1,8 @@
 /* eslint-disable */
-import axios from 'axios'
-import router from 'vue-router'
-import Cookies from 'js-cookie'
-import store from '../store'
+import axios from 'axios';
+import router from 'vue-router';
+import Cookies from 'js-cookie';
+import store from '../store';
 /**
  * 定义请求常量
  * TIME_OUT、ERR_OK
@@ -20,33 +20,33 @@ axios.defaults.baseURL = 'http://106.75.229.99:2021/api/';
 axios.interceptors.request.use(
     config => {
         config.headers['Content-Type'] = 'application/json;charset=UTF-8';
-        config.headers['accessToken'] = '';
-        if (Cookies.getJSON('loginMsg')) {
-            config.headers['accessToken'] = Cookies.getJSON('loginMsg').token
-        }
-        return config
+        // config.headers['accessToken'] = '';
+        // if (Cookies.getJSON('loginMsg')) {
+        //     config.headers['accessToken'] = Cookies.getJSON('loginMsg').token
+        // }
+        return config;
     },
     error => {
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
-)
+);
 // 封装响应拦截，判断token是否过期
 axios.interceptors.response.use(
     response => {
         let {
             data
-        } = response
+        } = response;
         if (data.responseCode === 202) { // 如果后台返回的错误标识为token过期，则重新登录
             // token过期移除token
-            Cookies.remove('loginMsg')
-            Cookies.remove('resumeId')
+            Cookies.remove('loginMsg');
+            Cookies.remove('resumeId');
             // 进行重新登录操作
         } else {
-            return Promise.resolve(data)
+            return Promise.resolve(data);
         }
     },
     error => {
-        return Promise.reject(error.response)
+        return Promise.reject(error.response);
         if (error.response.status) {
             switch (error.response.status) {
                 // 401: 未登录
@@ -101,7 +101,7 @@ axios.interceptors.response.use(
                     // toast.show()
             }
         }
-        return Promise.reject(error.response)
+        return Promise.reject(error.response);
     }
-)
+);
 export default axios

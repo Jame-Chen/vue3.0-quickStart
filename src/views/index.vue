@@ -54,7 +54,14 @@
         <div class=" content2">
           <div class="c2left">
             <img class="game"
-                 src="/img/img_chus.png" />
+                 src="/img/img_chus.png"
+                 v-if="dizhuOrder=='1'" />
+            <img class="game"
+                 src="/img/img_fus.png"
+                 v-if="dizhuOrder=='2'" />
+            <img class="game"
+                 src="/img/img_jues.png"
+                 v-if="dizhuOrder=='3'" />
 
             <div class="score">
               <div>
@@ -85,8 +92,14 @@
             </div>
           </div>
           <div class="c2right">
+
             <img class="game"
-                 src="/img/img_chus.png" />
+                 src="/img/img_chus.png"
+                 v-if="rongyOrder=='1'" />
+            <img class="game"
+                 src="/img/img_jues.png"
+                 v-if="rongyOrder=='2'" />
+
             <div class="teamvs">
               <template v-for="item in royalData">
                 <div class="teamxq">
@@ -116,14 +129,13 @@
                src="/img/img_index_liw.gif" />
         </div>
       </div>
+      <a class="prev"
+         @click="prev()"></a>
+      <a class="next"
+         @click="next()"></a>
       <a class="play"
          @click="play()"></a>
-      <audio autoplay="autoplay"
-             controls="controls"
-             loop="loop"
-             preload="auto"
-             src="http://demo.mimvp.com/html5/take_you_fly.mp3">
-      </audio>
+
     </div>
   </div>
 </template>
@@ -134,35 +146,49 @@ export default {
   data() {
     return {
       flag: false,
+      index: 0,
       timer: '',
       teamData: [],
       rankData: [],
       dizhuData: [],
-      royalData: []
+      royalData: [],
+      dizhuOrder: '',
+      rongyOrder: ''
     }
   },
   components: {
   },
   methods: {
     play: function () {
-      this.flag = !this.flag;
-      if (this.flag) {
+      let _this = this;
+      _this.flag = !_this.flag;
+      if (_this.flag) {
         $(".play").css(
           { "background": "url(\"/img/btn_index_zant.png\") no-repeat", "background-size": "100% 100%" }
         );
-        var index = 0;
-        //3秒轮播一次
-        this.timer = setInterval(function () {
-          index = (index == 1) ? 0 : index + 1;
+        //30秒轮播一次
+        _this.timer = '';
+        _this.timer = setInterval(function () {
+          _this.index = (_this.index == 1) ? 0 : _this.index + 1;
           //某个div显示，其他的隐藏
-          $(".content").hide().eq(index).show();
-        }, 3000);
+          $(".content").hide().eq(_this.index).show();
+        }, 30000);
       } else {
         $(".play").css(
           { "background": "url(\"/img/btn_index_play.png\") no-repeat", "background-size": "100% 100%" }
         );
-        window.clearInterval(this.timer);
+        window.clearInterval(_this.timer);
       }
+    },
+    prev: function () {
+      let _this = this;
+      _this.index = (_this.index == 0) ? 1 : _this.index - 1;
+      $(".content").hide().eq(_this.index).show();
+    },
+    next: function () {
+      let _this = this;
+      _this.index = (_this.index == 1) ? 0 : _this.index + 1;
+      $(".content").hide().eq(_this.index).show();
     },
     getteam: function () {
       get("t_dept_score/get", {}).then(res => {
@@ -181,18 +207,18 @@ export default {
     },
     getdizhu: function () {
       get("t_dizhu/Get", {}).then(res => {
-        console.log(res);
         if (res.Code == '200') {
           this.dizhuData = res.Data;
+          this.dizhuOrder = res.Data.length > 0 ? res.Data[0].NM_ORDER : '';
         }
       })
 
     },
     getroyal: function () {
       get("t_royal/Get", {}).then(res => {
-        console.log(res);
         if (res.Code == '200') {
           this.royalData = res.Data;
+          this.rongyOrder = res.Data.length > 0 ? res.Data[0].Children[0].ST_ORDER : '';
         }
       })
     }
@@ -205,6 +231,12 @@ export default {
     _this.getrank();
     _this.getdizhu();
     _this.getroyal();
+    setInterval(function () {
+      _this.getteam();
+      _this.getrank();
+      _this.getdizhu();
+      _this.getroyal();
+    }, 10000)
   }
 }
 </script>
@@ -314,8 +346,7 @@ audio {
   width: 100%;
 }
 .mctable tbody tr {
-  height: 0.38rem;
-  line-height: 0.38rem;
+  line-height: 0.48rem;
 }
 .mctable th {
   font-family: "SourceHanSerifSC-Heavy";
@@ -340,7 +371,7 @@ audio {
 }
 .liw_right {
   position: absolute;
-  top: 1.7rem;
+  top: 2.7rem;
   right: -0.7rem;
   width: 1.38rem;
   height: 1.37rem;
@@ -377,7 +408,7 @@ audio {
 }
 .c2_liw_right {
   position: absolute;
-  top: 1.7rem;
+  top: 2.7rem;
   right: -0.7rem;
   width: 1.38rem;
   height: 1.37rem;
@@ -482,6 +513,26 @@ audio {
   background-size: 100% 100%;
   position: absolute;
   bottom: 1%;
+  right: 1%;
+}
+.prev {
+  display: inline-block;
+  width: 0.51rem;
+  height: 0.5rem;
+  background: url("/img/btn_index_left.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 40%;
+  left: 1%;
+}
+.next {
+  display: inline-block;
+  width: 0.51rem;
+  height: 0.5rem;
+  background: url("/img/btn_index_right.png") no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 40%;
   right: 1%;
 }
 </style>
