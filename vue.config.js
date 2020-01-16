@@ -1,5 +1,4 @@
 const path = require('path');
-const webpack = require('webpack');
 module.exports = {
   // 基本路径
   baseUrl: process.env.NODE_ENV === 'production' ?
@@ -15,13 +14,7 @@ module.exports = {
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: () => {},
   configureWebpack: (config) => {
-    plugins: [
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-        "windows.jQuery": "jquery"
-      })
-    ];
+  
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
       config.mode = 'production';

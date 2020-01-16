@@ -1,5 +1,5 @@
 // 存放各种api集合  发挥脑洞 自己操作
-import axios from './index'
+import axios from './index';
 
 /**
  * get方法，对应get请求
@@ -13,7 +13,7 @@ export function get(url, params) {
         }).then(res => {
             resolve(res);
         }).catch(err => {
-            reject(err)
-        })
+            reject(err);
+        });
     });
 }

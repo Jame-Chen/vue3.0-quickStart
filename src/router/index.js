@@ -1,21 +1,30 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-Vue.use(Router)
+import Vue from 'vue';
+import Router from 'vue-router';
+Vue.use(Router);
 const router = new Router({
-    // mode:'history',
-    routes: [
-        {
-            path: '/',
-            name: 'index',
-            meta: {
-                title: 'herox',
-                auth:false,//需要登录
-                keepAlive: false
-            },
-            component:resolve=>require(['@/views/index.vue'],resolve)
-        },
-    ]
-})
+  // mode:'history',
+  routes: [{
+      path: '/',
+      name: 'index',
+      meta: {
+        title: 'herox',
+        auth: false, //需要登录
+        keepAlive: false
+      },
+      component: resolve => require(['@/views/index.vue'], resolve)
+    },
+    {
+      path: '/test',
+      name: 'test',
+      meta: {
+        title: 'test',
+        auth: false, //需要登录
+        keepAlive: false
+      },
+      component: resolve => require(['@/views/Test.vue'], resolve)
+    },
+  ]
+});
 /**
  * 路由前置检查
  */
@@ -27,7 +36,7 @@ router.beforeEach((to, from, next) => {
   }
   next();
 });
-router.afterEach(() => {  
+router.afterEach(() => {
   // 在即将进入新的页面组件前操作
-})
+});
 export default router;

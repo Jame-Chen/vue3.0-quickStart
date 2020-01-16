@@ -1,4 +1,4 @@
-<template>
+<template >
   <div class="bg">
     <div class="banner">
       <img src="/img/img_index_logo.png" />
@@ -8,7 +8,8 @@
            src="/img/img_index_star.gif" />
     </div>
     <div class="container">
-      <div class="content content1 animated bounceInLeft">
+      <div v-show="index==0"
+           class="content1 animated bounceInLeft">
         <ul class="team">
           <template v-for="item in teamData">
             <li>
@@ -49,70 +50,76 @@
         <img class="liw_right"
              src="/img/img_index_liw.gif" />
       </div>
-      <div class="content animated bounceInRight"
-           style="display:none;">
-        <div class=" content2">
-          <div class="c2left">
-            <img class="game"
-                 src="/img/img_chus.png"
-                 v-if="dizhuOrder=='1'" />
-            <img class="game"
-                 src="/img/img_fus.png"
-                 v-if="dizhuOrder=='2'" />
-            <img class="game"
-                 src="/img/img_jues.png"
-                 v-if="dizhuOrder=='3'" />
 
-            <div class="score">
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>分组</th>
-                      <th>姓名</th>
-                      <th>得分</th>
-                    </tr>
-                  </thead>
-                </table>
-              </div>
-              <div class="scorebody">
-                <table>
-                  <tbody>
-                    <template v-for="item in dizhuData">
-                      <tr>
-                        <td>{{item.ST_GROUP}}</td>
-                        <td>{{item.ST_NAME}}</td>
-                        <td>{{item.NM_SCORE}}</td>
-                      </tr>
-                    </template>
+      <div v-show="index==1"
+           class="content2 animated bounceInRight">
+        <div class="c2left">
+          <img class="game"
+               src="/img/img_chus.png"
+               v-if="dizhuOrder=='1'" />
+          <img class="game"
+               src="/img/img_fus.png"
+               v-if="dizhuOrder=='2'" />
+          <img class="game"
+               src="/img/img_jues.png"
+               v-if="dizhuOrder=='3'" />
 
-                  </tbody>
-                </table>
+          <div class="score">
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>分组</th>
+                    <th>姓名</th>
+                    <th>得分</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div class="scorebody">
+              <div id="scoretb">
+                <ul>
+                  <li v-for="item in dizhuData">
+                    <span>{{item.ST_GROUP}}</span>
+                    <span>{{item.ST_NAME}}</span>
+                    <span>{{item.NM_SCORE}}</span>
+                  </li>
+                </ul>
+                <!-- <table>
+                <tbody id="scoretb" class="scoretb">
+                  <tr v-for="item in dizhuData">
+                    <td>{{item.ST_GROUP}}</td>
+                    <td>{{item.ST_NAME}}</td>
+                    <td>{{item.NM_SCORE}}</td>
+                  </tr>
+                </tbody>
+              </table> -->
               </div>
             </div>
           </div>
-          <div class="c2right">
+        </div>
+        <div class="c2right">
 
-            <img class="game"
-                 src="/img/img_chus.png"
-                 v-if="rongyOrder=='1'" />
-            <img class="game"
-                 src="/img/img_jues.png"
-                 v-if="rongyOrder=='2'" />
+          <img class="game"
+               src="/img/img_chus.png"
+               v-if="rongyOrder=='1'" />
+          <img class="game"
+               src="/img/img_jues.png"
+               v-if="rongyOrder=='2'" />
 
-            <div class="teamvs">
-              <template v-for="item in royalData">
-                <div class="teamxq">
-                  <span>{{item.Children[0].ST_DEPT}}</span>
-                  <span>VS</span>
-                  <span>{{item.Children[1].ST_DEPT}}</span>
-                </div>
-                <div class="grade">
-                  <span>{{item.Children[0].NM_WIN}}</span>
-                  <span>{{item.Children[1].NM_WIN}}</span>
-                </div>
-              </template>
-              <!-- <div class="teamxq">
+          <div class="teamvs">
+            <template v-for="item in royalData">
+              <div class="teamxq">
+                <span>{{item.Children[0].ST_DEPT}}</span>
+                <span>VS</span>
+                <span>{{item.Children[1].ST_DEPT}}</span>
+              </div>
+              <div class="grade">
+                <span>{{item.Children[0].NM_WIN}}</span>
+                <span>{{item.Children[1].NM_WIN}}</span>
+              </div>
+            </template>
+            <!-- <div class="teamxq">
                 <span>超越队</span>
                 <span>VS</span>
                 <span>韵华队</span>
@@ -121,18 +128,20 @@
                 <span>3</span>
                 <span>3</span>
               </div> -->
-            </div>
           </div>
-          <img class="c2_liw_left"
-               src="/img/img_index_liw.gif" />
-          <img class="c2_liw_right"
-               src="/img/img_index_liw.gif" />
         </div>
+        <img class="c2_liw_left"
+             src="/img/img_index_liw.gif" />
+        <img class="c2_liw_right"
+             src="/img/img_index_liw.gif" />
       </div>
+
       <a class="prev"
          @click="prev()"></a>
+
       <a class="next"
          @click="next()"></a>
+
       <a class="play"
          @click="play()"></a>
 
@@ -140,8 +149,8 @@
   </div>
 </template>
 <script>
-import $ from 'jquery'
-import { get } from '../http/api'
+import { get } from '../http/api';
+import '../../public/js/jquery.scrollbox';
 export default {
   data() {
     return {
@@ -153,7 +162,8 @@ export default {
       dizhuData: [],
       royalData: [],
       dizhuOrder: '',
-      rongyOrder: ''
+      rongyOrder: '',
+      con1: ''
     }
   },
   components: {
@@ -166,7 +176,6 @@ export default {
       _this.getrank();
       _this.getdizhu();
       _this.getroyal();
-      $(".content").hide().eq(_this.index).show();
       window.clearInterval(_this.timer);
       _this.timer = setInterval(function () {
         _this.getteam();
@@ -175,7 +184,6 @@ export default {
         _this.getroyal();
         _this.index = (_this.index == 1) ? 0 : _this.index + 1;
         //某个div显示，其他的隐藏
-        $(".content").hide().eq(_this.index).show();
       }, 30000);
     },
     play: function () {
@@ -197,11 +205,17 @@ export default {
       let _this = this;
       _this.index = (_this.index == 0) ? 1 : _this.index - 1;
       _this.stime();
+      if (!_this.flag) {
+        window.clearInterval(_this.timer);
+      }
     },
     next: function () {
       let _this = this;
       _this.index = (_this.index == 1) ? 0 : _this.index + 1;
       _this.stime();
+      if (!_this.flag) {
+        window.clearInterval(_this.timer);
+      }
     },
     getteam: function () {
       get("t_dept_score/get", {}).then(res => {
@@ -223,6 +237,7 @@ export default {
         if (res.Code == '200') {
           this.dizhuData = res.Data;
           this.dizhuOrder = res.Data.length > 0 ? res.Data[0].NM_ORDER : '';
+
         }
       })
 
@@ -235,8 +250,23 @@ export default {
         }
       })
     }
+
   },
   created() {
+    // 主页添加键盘事件,注意,不能直接在焦点事件上添加回车
+    var _this = this;
+    document.onkeyup = function (e) {
+      var key = window.event.keyCode;
+      if (key == 37) {
+        _this.prev();
+      }
+      if (key == 39) {
+        _this.next();
+      }
+      if (key == 32) {
+        _this.play();
+      }
+    };
   },
   mounted() {
     const _this = this;
@@ -244,6 +274,12 @@ export default {
     _this.getrank();
     _this.getdizhu();
     _this.getroyal();
+    $('#scoretb').scrollbox({
+      linear: true,
+      step: 1,
+      delay: 0,
+      speed: 100
+    });
   }
 }
 </script>
@@ -258,6 +294,9 @@ li {
 }
 </style>
 <style  scoped>
+.anim {
+  transition: all 0.5s;
+}
 audio {
   display: none;
 }
@@ -317,13 +356,13 @@ audio {
   font-family: "MicrosoftYaHei";
   float: left;
   display: block;
-  width: 1.22rem;
+  width: 1.42rem;
 }
 
 .team li:nth-child(2),
 .team li:nth-child(3),
 .team li:nth-child(4) {
-  margin-left: 16%;
+  margin-left: 14%;
 }
 .team li div:nth-child(1) {
   text-align: center;
@@ -436,13 +475,39 @@ audio {
 }
 .scorebody {
   height: 3.6rem;
-  overflow: auto;
+  overflow: hidden;
   display: inline-block;
   width: 100%;
 }
+.scorebody li {
+  height: 0.38rem;
+  line-height: 0.38rem;
+  font-size: 0.28rem;
+}
+.scorebody li span {
+  display: inline-block;
+  width: 1.32rem;
+  font-family: "MicrosoftYaHei";
+  font-weight: 700;
+  color: #fff4c6;
+}
+#scoretb {
+  height: 3.6rem;
+  overflow: hidden;
+}
+/* .scorebody table {
+  position: absolute;
+}
+
+.scoretb tr {
+  -webkit-transition: all ease 0.5s;
+  -moz-transition: all ease 0.5s;
+  -o-transition: all ease 0.5s;
+  transition: all ease 0.5s;
+}
 .scorebody tr td {
   width: 1.88rem;
-}
+} */
 .c2left th {
   font-family: "SourceHanSerifSC-Heavy";
   font-size: 0.34rem;
@@ -477,8 +542,8 @@ audio {
 .teamvs {
   margin-left: 20%;
   margin-right: 10%;
-  margin-top: 35%;
-  height: 3.45rem;
+  margin-top: 32%;
+  height: 3.6rem;
   overflow: auto;
 }
 .teamxq {

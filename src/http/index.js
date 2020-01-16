@@ -104,4 +104,4 @@ axios.interceptors.response.use(
         return Promise.reject(error.response);
     }
 );
-export default axios
+export default axios;
