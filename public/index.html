@@ -8,35 +8,11 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link href="https://unpkg.com/animate.css@3.5.2/animate.min.css" rel="stylesheet" type="text/css">
     <title></title>
-    <script>
-        (function (doc, win) {
-            var html = doc.getElementsByTagName("html")[0],
-                // orientationchange->手机屏幕转屏事件
-                // resize->页面大小改变事件(兼容pc，移动端)
-                reEvt = "orientationchange" in win ? "orientationchange" : "resize",
-                designWidth = 1366,
-                setFontSize = function () {
-                    var clientW = doc.documentElement.clientWidth || doc.body.clientWidth;
-                    if (!clientW) {
-                        return;
-                    }
-                    html.style.fontSize = 100 * (clientW / 1366) + "px";
-                }
-            var resetFontSize = function () {
-                if (win.resetFontTimeout) {
-                    clearTimeout(win.resetFontTimeout);
-                }
-                //防抖
-                win.resetFontTimeout = setTimeout(function () {
-                    setFontSize();
-                }, 500);
-            }
-            win.addEventListener(reEvt, resetFontSize);
-            // DOMContentLoaded->dom加载完就执行,onload要dom/css/js都加载完才执行
-            //doc.addEventListener("onload", setFontSize);
-            doc.addEventListener("DOMContentLoaded", setFontSize);
-        })(document, window);
-    </script>
+    <style>
+        html {
+            font-size: calc(100vw / 13.66);
+        }
+    </style>
 </head>
 
 <body>

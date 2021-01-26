@@ -27,8 +27,7 @@ module.exports = {
       // 开发生产共同配置
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, './src'),
-          '@c': path.resolve(__dirname, './src/components')
+          '@': path.resolve(__dirname, 'src')
         }
       }
     });

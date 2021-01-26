@@ -11,7 +11,7 @@ const router = new Router({
         auth: false, //需要登录
         keepAlive: false
       },
-      component: resolve => require(['@/views/index.vue'], resolve)
+      component: resolve => require(['../views/index.vue'], resolve)
     },
     {
       path: '/test',
@@ -21,7 +21,7 @@ const router = new Router({
         auth: false, //需要登录
         keepAlive: false
       },
-      component: resolve => require(['@/views/Test.vue'], resolve)
+      component: resolve => require(['../views/Test.vue'], resolve)
     },
   ]
 });
