@@ -448,7 +448,7 @@
   .c2left .game {
     position: absolute;
     left: 5%;
-    top: 45%;
+    top: 55%;
     width: 0.84rem;
     height: 0.87rem;
   }
@@ -556,7 +556,7 @@
   .c2right .game {
     position: absolute;
     left: 5%;
-    top: 45%;
+    top: 55%;
     width: 0.84rem;
     height: 0.87rem;
   }
@@ -574,7 +574,7 @@
     color: #fff4c6;
     font-family: "MicrosoftYaHei";
     font-weight: bold;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
   }
 
   .teamxq span {
@@ -599,7 +599,7 @@
 
   .grade {
     font-size: 0.44rem;
-    margin-top: 0.2rem;
+    margin-top: 0.1rem;
   }
 
   .grade span {
