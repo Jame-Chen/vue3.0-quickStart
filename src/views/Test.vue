@@ -1,86 +1,36 @@
 <template>
   <div>
-    <div id="scoretb">
-      <ul>
-        <li>
-          1
-        </li>
-        <li>
-          2
-        </li>
-        <li>
-         3
-        </li>
-        <li>
-          4
-        </li>
-        <li>
-         5
-        </li>
-         <li>
-          1
-        </li>
-        <li>
-          2
-        </li>
-        <li>
-         3
-        </li>
-        <li>
-          4
-        </li>
-        <li>
-         5
-        </li>
-         <li>
-          1
-        </li>
-        <li>
-          2
-        </li>
-        <li>
-         3
-        </li>
-        <li>
-          4
-        </li>
-        <li>
-         5
-        </li>
-      </ul>
-    </div>
+ <el-tabs tab-position="left" style="height:100%;">
+    <el-tab-pane label="基本表格">
+
+   <eltable :data="data" :complexColumn="complexColumn"></eltable>
+
+    </el-tab-pane>
+    <el-tab-pane label="基本表格">基本表格</el-tab-pane>
+    <el-tab-pane label="基本表格">基本表格</el-tab-pane>
+    <el-tab-pane label="基本表格">基本表格</el-tab-pane>
+  </el-tabs>
+   
   </div>
 </template>
+
 <script>
-import { get } from '../http/api';
-import '../../public/js/jquery.scrollbox';
+import table from '@/assets/js/table.js'
+import eltable from '@/components/elTable.vue'
 export default {
+  mixins: [table],
   data() {
-    return {
-      dizhuData: []
+    return {}
+  },
+  components: { eltable },
+  methods: {
+    selectionChange(rows) {
+      console.log('selected', rows)
     }
   },
-  methods: {
-  },
-  mounted() {
-    $('#scoretb').scrollbox({
-      linear: true,
-      step: 1,
-      delay: 0,
-      speed: 100
-    });
-  }
+  mounted() {}
 }
 </script>
-<style scoped>
-#scoretb {
-  height: 200px;
-  overflow: hidden;
-  font-size: 36px;
-  background-color: aquamarine;
-}
-#scoretb ul {
-  height: 300px;
-  overflow: hidden;
-}
+
+<style lang="scss" scoped>
 </style>
