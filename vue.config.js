@@ -58,7 +58,7 @@ module.exports = {
     open: true, //配置自动启动浏览器
     port: 8080,
     https: false,
-    hot:true
+    hot:true,
     // hotOnly: false,
     // proxy: {
     //  // 设置代理
