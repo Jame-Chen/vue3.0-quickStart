@@ -69,50 +69,58 @@ export default {
           {
             data: [840, 632, 961, 934, 1290, 1330, 920],
             type: 'line',
-                symbolSize: 8,
+            symbolSize: 8,
             lineStyle: {
               normal: {
-                color: "#00E2FC",
+                color: '#00E2FC',
                 shadowColor: 'rgba(0, 0, 0, .3)',
                 shadowBlur: 0,
                 shadowOffsetY: 5,
-                shadowOffsetX: 5,
-              },
+                shadowOffsetX: 5
+              }
             },
             label: {
               show: true,
               position: 'top',
               textStyle: {
-                color: '#11FFFF',
+                color: '#11FFFF'
               }
             },
             itemStyle: {
-              color: "#11FFFF",
-              borderColor: "#fff",
+              color: '#11FFFF',
+              borderColor: '#fff',
               borderWidth: 3,
               shadowColor: 'rgba(0, 0, 0, .3)',
               shadowBlur: 0,
               shadowOffsetY: 2,
-              shadowOffsetX: 2,
+              shadowOffsetX: 2
             },
             tooltip: {
               show: true
             },
             areaStyle: {
               normal: {
-                color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                    offset: 0,
-                    color: 'rgba(17,255,255,0.3)'
-                  },
-                  {
-                    offset: 1,
-                    color: 'rgba(17,255,255,0)'
-                  }
-                ], false),
+                color: new this.$echarts.graphic.LinearGradient(
+                  0,
+                  0,
+                  0,
+                  1,
+                  [
+                    {
+                      offset: 0,
+                      color: 'rgba(17,255,255,0.3)'
+                    },
+                    {
+                      offset: 1,
+                      color: 'rgba(17,255,255,0)'
+                    }
+                  ],
+                  false
+                ),
                 shadowColor: 'rgba(17,255,255, 0.9)',
                 shadowBlur: 20
               }
-            },
+            }
           }
         ],
         tooltip: {}
