@@ -7,17 +7,19 @@ import axios from './http/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import * as echarts from 'echarts'
-import BMap from 'vue-baidu-map'
+// import BMap from 'vue-baidu-map'
+import VideoPlayer from 'vue-video-player'
 
 Vue.prototype.$echarts = echarts
 Vue.prototype.$http = axios
-Vue.prototype.BMap = BMap
+// Vue.prototype.BMap = BMap
 Vue.config.productionTip = false
 Vue.use(Vuex)
 Vue.use(ElementUI)
-Vue.use(BMap, {
-  ak: 'ODcAFpZ6Ly7P6rkWi2UhxtE8OuiU0sdO'
-})
+// Vue.use(BMap, {
+//   ak: 'ODcAFpZ6Ly7P6rkWi2UhxtE8OuiU0sdO'
+// })
+Vue.use(VideoPlayer)
 new Vue({
   store,
   router,

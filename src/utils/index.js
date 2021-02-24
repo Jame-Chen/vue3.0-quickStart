@@ -1,53 +1,66 @@
-/**
- * 提示与加载工具类
+export default {
+    /**
+ * 
+ * @desc   url参数转对象
+ * @param  {String} url  default: window.location.href
+ * @return {Object} 
  */
-import axios from '../../http'
-import OSS from 'ali-oss'
-import qs from 'qs'
-import nanoid from 'nanoid'
-export default class utils {
-    constructor() {
-    }
-    // 验证手机号
-    static isPoneAvailable(str) {
-        var myreg=/^[1][3,4,5,6,7,8][0-9]{9}$/;
-        if (!myreg.test(str)) {
-            return false;
+    parseQueryString(url) {
+        url = !url ? window.location.href : url;
+        if (url.indexOf('?') === -1) {
+            return {};
+        }
+        var search = url[0] === '?' ? url.substr(1) : url.substring(url.lastIndexOf('?') + 1);
+        if (search === '') {
+            return {};
+        }
+        search = search.split('&');
+        var query = {};
+        for (var i = 0; i < search.length; i++) {
+            var pair = search[i].split('=');
+            query[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
+        }
+        return query;
+    },
+    isEmptyObject(obj) {
+        if (!obj || typeof obj !== 'object' || Array.isArray(obj))
+            return false
+        return !Object.keys(obj).length
+    },
+    getDateDiff(dateTimeStamp) {
+        var result;
+        var minute = 1000 * 60;
+        var hour = minute * 60;
+        var day = hour * 24;
+        var halfamonth = day * 15;
+        var month = day * 30;
+        var now = new Date().getTime();
+        var diffValue = now - new Date(dateTimeStamp).getTime();
+        if (diffValue < 0) {
+          return;
+        }
+        var monthC = diffValue / month;
+        var weekC = diffValue / (7 * day);
+        var dayC = diffValue / day;
+        var hourC = diffValue / hour;
+        var minC = diffValue / minute;
+        if (monthC >= 1) {
+          if (monthC <= 12) result = "" + parseInt(monthC) + "月前";
+          else {
+            result = "" + parseInt(monthC / 12) + "年前";
+          }
+        } else if (weekC >= 1) {
+          result = "" + parseInt(weekC) + "周前";
+        } else if (dayC >= 1) {
+          result = "" + parseInt(dayC) + "天前";
+        } else if (hourC >= 1) {
+          result = "" + parseInt(hourC) + "小时前";
+        } else if (minC >= 1) {
+          result = "" + parseInt(minC) + "分钟前";
         } else {
-            return true;
+          result = "刚刚";
         }
-    }
-    //检查是什么浏览器
-    static getExplorer() {
-        localStorage.setItem('ie9','true')
-        var explorer = window.navigator.userAgent ;
-        if (explorer.indexOf("MSIE 9.0") >= 0) {//ie 
-            return "ie9";
-        }else if (explorer.indexOf("Firefox") >= 0) {//firefox
-            return "Firefox"; 
-        }else if(explorer.indexOf("Chrome") >= 0){//Chrome
-            return "Chrome";
-        }else if(explorer.indexOf("Opera") >= 0){//Opera
-            return "Opera";
-        }else if(explorer.indexOf("Safari") >= 0){//Safari
-            return "Safari";
-        }
-    }
-    // 删除数组中指定元素
-    static removeArrVal(arr,val){
-        for(var i=0; i<arr.length; i++) {
-            if(arr[i] == val) {
-                arr.splice(i, 1);
-                break;
-            }
-        }
-    }
-    // 判断字符是否为空的方法
-    static isEmpty(obj){
-        if(typeof obj == "undefined" || obj == null || obj == ""){
-            return false;
-        }else{
-            return true;
-        }
-    }
+        return result;
+      }
+
 }

@@ -23,6 +23,16 @@ const router = new Router({
         keepAlive: false
       },
       component: resolve => require(['@/views/Test.vue'], resolve)
+    },
+    {
+      path: '/videoPlayer',
+      name: 'videoPlayer',
+      meta: {
+        title: 'videoPlayer',
+        auth: false, //需要登录
+        keepAlive: false
+      },
+      component: resolve => require(['@/views/videoPlayer.vue'], resolve)
     }
   ]
 })
