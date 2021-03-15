@@ -25,6 +25,16 @@ const router = new Router({
       component: resolve => require(['@/views/Test.vue'], resolve)
     },
     {
+        path: '/hunj',
+        name: 'hunj',
+        meta: {
+          title: 'hunj',
+          auth: false, //需要登录
+          keepAlive: false
+        },
+        component: resolve => require(['@/views/hunj.vue'], resolve)
+      },
+    {
       path: '/videoPlayer',
       name: 'videoPlayer',
       meta: {
