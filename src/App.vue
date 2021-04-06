@@ -5,15 +5,16 @@
 </template>
 
 <script>
-  import $ from '@/assets/jquery-vendor.js';
-  export default {
-    name: 'app',
-    components: {}
-  }
+import $ from '@/assets/jquery-vendor.js'
+export default {
+  name: 'app',
+  components: {}
+}
 </script>
-<style src='./assets/css/normalize.css'></style>
+<style src='./assets/css/normalize.css'>
+</style>
 <style scoped>
-  #app {
-    height: 100%;
-  }
+#app {
+  height: 100%;
+}
 </style>

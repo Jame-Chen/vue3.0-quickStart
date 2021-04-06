@@ -1,10 +1,10 @@
 const path = require('path');
 module.exports = {
   // 基本路径
-  baseUrl: process.env.NODE_ENV === 'production' ?
-    '' //your_production_url
-    :
-    '',
+  baseUrl:
+    process.env.NODE_ENV === 'production'
+      ? '' //your_production_url
+      : '',
   // 输出文件目录
   outputDir: 'dist',
   assetsDir: 'static', //静态资源目录
@@ -13,8 +13,7 @@ module.exports = {
   // webpack配置
   // see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
   chainWebpack: () => {},
-  configureWebpack: (config) => {
-  
+  configureWebpack: config => {
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
       config.mode = 'production';
@@ -27,13 +26,10 @@ module.exports = {
       // 开发生产共同配置
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, 'src')
-        }
-      }
+          '@': path.resolve(__dirname, 'src'),
+        },
+      },
     });
-    config.externals={
-        BMap:"BMap"
-    }
   },
   // 生产环境是否生成 sourceMap 文件
   productionSourceMap: false,
@@ -45,16 +41,16 @@ module.exports = {
     sourceMap: false,
     // css预设器配置项
     loaderOptions: {
-        postcss: {
-            plugins: [
-                require('postcss-px2rem')({
-                    remUnit: 100
-                })
-            ]
-        }
+      postcss: {
+        plugins: [
+          require('postcss-px2rem')({
+            remUnit: 100,
+          }),
+        ],
+      },
     },
     // 启用 CSS modules for all css / pre-processor files.
-    modules: false
+    modules: false,
   },
   // 构建时开启多进程处理 babel 编译
   parallel: require('os').cpus().length > 1,
@@ -67,7 +63,7 @@ module.exports = {
     open: true, //配置自动启动浏览器
     port: 8080,
     https: false,
-    hot:true,
+    hot: true,
     // hotOnly: false,
     // proxy: {
     //  // 设置代理
@@ -80,10 +76,10 @@ module.exports = {
     //      }
     //  }
     // },
-    before: (app) => {}
+    before: app => {},
   },
   // 第三方插件配置
   pluginOptions: {
     // ...
-  }
+  },
 };
