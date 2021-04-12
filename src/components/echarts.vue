@@ -1,5 +1,5 @@
 <template>
-    <div  :id="id" ></div>
+    <div  :id="id" style="width:100%;height:100%" ></div>
 </template>
 <script>
 export default {
@@ -18,7 +18,7 @@ export default {
     }
   },
   mounted() {
-      this.drawGraph(this.id, this.data)
+    this.drawGraph(this.id, this.data)
   },
   methods: {
     drawGraph(id, data) {
