@@ -130,390 +130,384 @@
   </div>
 </template>
 <script>
-  import {
-    get
-  } from '@/http/api';
-  import '../../public/js/jquery.scrollbox';
-  export default {
-    data() {
-      return {
-        flag: false,
-        index: 0,
-        timer: '',
-        teamData: [],
-        rankData: [],
-        dizhuData: [],
-        royalData: [],
-        dizhuOrder: '',
-        rongyOrder: '',
-        con1: ''
-      }
-    },
-    components: {},
-    methods: {
-      stime: function() {
-        let _this = this;
-        //30秒轮播一次
-        _this.getteam();
-        _this.getrank();
-        _this.getdizhu();
-        _this.getroyal();
-        window.clearInterval(_this.timer);
-        _this.timer = setInterval(function() {
-          _this.getteam();
-          _this.getrank();
-          _this.getdizhu();
-          _this.getroyal();
-          _this.index = (_this.index == 1) ? 0 : _this.index + 1;
-          //某个div显示，其他的隐藏
-        }, 30000);
-      },
-      play: function() {
-        let _this = this;
-        _this.flag = !_this.flag;
-        if (_this.flag) {
-          _this.stime();
-        } else {
-          window.clearInterval(_this.timer);
-        }
-      },
-      prev: function() {
-        let _this = this;
-        _this.index = (_this.index == 0) ? 1 : _this.index - 1;
-        _this.stime();
-        if (!_this.flag) {
-          window.clearInterval(_this.timer);
-        }
-      },
-      next: function() {
-        let _this = this;
-        _this.index = (_this.index == 1) ? 0 : _this.index + 1;
-        _this.stime();
-        if (!_this.flag) {
-          window.clearInterval(_this.timer);
-        }
-      },
-      getteam: function() {
-        get("t_dept_score/get", {}).then(res => {
-          if (res.Code == '200') {
-            this.teamData = res.Data;
-          }
-        })
-
-      },
-      getrank: function() {
-        get("t_rank/Get", {}).then(res => {
-          if (res.Code == '200') {
-            this.rankData = res.Data;
-          }
-        })
-      },
-      getdizhu: function() {
-        get("t_dizhu/Get", {}).then(res => {
-          if (res.Code == '200') {
-            this.dizhuData = res.Data;
-            this.dizhuOrder = res.Data.length > 0 ? res.Data[0].NM_ORDER : '';
-
-          }
-        })
-
-      },
-      getroyal: function() {
-        get("t_royal/Get", {}).then(res => {
-          if (res.Code == '200') {
-            this.royalData = res.Data;
-            this.rongyOrder = res.Data.length > 0 ? res.Data[0].Children[0].ST_ORDER : '';
-          }
-        })
-      }
-
-    },
-    created() {
-      // 主页添加键盘事件,注意,不能直接在焦点事件上添加回车
-      var _this = this;
-      document.onkeyup = function(e) {
-        var key = window.event.keyCode;
-        if (key == 37) {
-          _this.prev();
-        }
-        if (key == 39) {
-          _this.next();
-        }
-        if (key == 32) {
-          _this.play();
-        }
-      };
-    },
-    mounted() {
-      const _this = this;
-      _this.getteam();
-      _this.getrank();
-      _this.getdizhu();
-      _this.getroyal();
-      $('#scoretb').scrollbox({
-        linear: true,
-        step: 1,
-        delay: 0,
-        speed: 100
-      });
+import { get } from '@/http/api'
+import '../../public/js/jquery.scrollbox'
+export default {
+  data() {
+    return {
+      flag: false,
+      index: 0,
+      timer: '',
+      teamData: [],
+      rankData: [],
+      dizhuData: [],
+      royalData: [],
+      dizhuOrder: '',
+      rongyOrder: '',
+      con1: ''
     }
+  },
+  components: {},
+  methods: {
+    stime: function() {
+      let _this = this
+      //30秒轮播一次
+      _this.getteam()
+      _this.getrank()
+      _this.getdizhu()
+      _this.getroyal()
+      window.clearInterval(_this.timer)
+      _this.timer = setInterval(function() {
+        _this.getteam()
+        _this.getrank()
+        _this.getdizhu()
+        _this.getroyal()
+        _this.index = _this.index == 1 ? 0 : _this.index + 1
+        //某个div显示，其他的隐藏
+      }, 30000)
+    },
+    play: function() {
+      let _this = this
+      _this.flag = !_this.flag
+      if (_this.flag) {
+        _this.stime()
+      } else {
+        window.clearInterval(_this.timer)
+      }
+    },
+    prev: function() {
+      let _this = this
+      _this.index = _this.index == 0 ? 1 : _this.index - 1
+      _this.stime()
+      if (!_this.flag) {
+        window.clearInterval(_this.timer)
+      }
+    },
+    next: function() {
+      let _this = this
+      _this.index = _this.index == 1 ? 0 : _this.index + 1
+      _this.stime()
+      if (!_this.flag) {
+        window.clearInterval(_this.timer)
+      }
+    },
+    getteam: function() {
+      get('t_dept_score/get', {}).then(res => {
+        if (res.Code == '200') {
+          this.teamData = res.Data
+        }
+      })
+    },
+    getrank: function() {
+      get('t_rank/Get', {}).then(res => {
+        if (res.Code == '200') {
+          this.rankData = res.Data
+        }
+      })
+    },
+    getdizhu: function() {
+      get('t_dizhu/Get', {}).then(res => {
+        if (res.Code == '200') {
+          this.dizhuData = res.Data
+          this.dizhuOrder = res.Data.length > 0 ? res.Data[0].NM_ORDER : ''
+        }
+      })
+    },
+    getroyal: function() {
+      get('t_royal/Get', {}).then(res => {
+        if (res.Code == '200') {
+          this.royalData = res.Data
+          this.rongyOrder = res.Data.length > 0 ? res.Data[0].Children[0].ST_ORDER : ''
+        }
+      })
+    }
+  },
+  created() {
+    // 主页添加键盘事件,注意,不能直接在焦点事件上添加回车
+    var _this = this
+    document.onkeyup = function(e) {
+      var key = window.event.keyCode
+      if (key == 37) {
+        _this.prev()
+      }
+      if (key == 39) {
+        _this.next()
+      }
+      if (key == 32) {
+        _this.play()
+      }
+    }
+  },
+  mounted() {
+    const _this = this
+    _this.getteam()
+    _this.getrank()
+    _this.getdizhu()
+    _this.getroyal()
+    $('#scoretb').scrollbox({
+      linear: true,
+      step: 1,
+      delay: 0,
+      speed: 100
+    })
   }
+}
 </script>
 <style>
-  body {
-    min-height: 7.68rem;
-  }
+body {
+  min-height: 7.68rem;
+}
 
-  ul,
-  li {
-    margin: 0;
-    padding: 0;
-  }
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
 </style>
 <style scoped>
-  .anim {
-    transition: all 0.5s;
-  }
+.anim {
+  transition: all 0.5s;
+}
 
-  audio {
-    display: none;
-  }
+audio {
+  display: none;
+}
 
-  .bg {
-    width: 100%;
-    height: 100%;
-    background: url("../assets/img/img_bg.png") no-repeat;
-    background-size: 100% 100%;
-  }
+.bg {
+  width: 100%;
+  height: 100%;
+  background: url('../assets/img/img_bg.png') no-repeat;
+  background-size: 100% 100%;
+}
 
-  .banner {
-    width: 100%;
-    height: 1.5rem;
-    text-align: center;
-    position: relative;
-  }
+.banner {
+  width: 100%;
+  height: 1.5rem;
+  text-align: center;
+  position: relative;
+}
 
-  .banner img {
-    height: 2.08rem;
-  }
+.banner img {
+  height: 2.08rem;
+}
 
-  .leftstar {
-    position: absolute;
-    left: 26%;
-    top: 20%;
-    width: 0.54rem;
-    height: 0.85rem !important;
-  }
+.leftstar {
+  position: absolute;
+  left: 26%;
+  top: 20%;
+  width: 0.54rem;
+  height: 0.85rem !important;
+}
 
-  .rightstar {
-    position: absolute;
-    right: 24%;
-    top: 20%;
-    width: 0.54rem;
-    height: 0.85rem !important;
-  }
+.rightstar {
+  position: absolute;
+  right: 24%;
+  top: 20%;
+  width: 0.54rem;
+  height: 0.85rem !important;
+}
 
-  .container {
-    width: 100%;
-    height: calc(100vh - 1.5rem);
-    text-align: center;
-    position: relative;
-  }
+.container {
+  width: 100%;
+  height: calc(100vh - 1.5rem);
+  text-align: center;
+  position: relative;
+}
 
-  .content1 {
-    width: 11.93rem;
-    height: 5.95rem;
-    background: url("../assets/img/img_index_bif_bg.png") no-repeat;
-    background-size: 100% 100%;
-    display: inline-block;
-    text-align: center;
-    position: relative;
-  }
+.content1 {
+  width: 11.93rem;
+  height: 5.95rem;
+  background: url('../assets/img/img_index_bif_bg.png') no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  text-align: center;
+  position: relative;
+}
 
-  .team {
-    overflow: hidden;
-    padding: 0 1rem;
-    margin-top: 0.3rem;
-  }
+.team {
+  overflow: hidden;
+  padding: 0 1rem;
+  margin-top: 0.3rem;
+}
 
-  .team li {
-    list-style: none;
-    font-size: 0.34rem;
-    color: #fff4c6;
-    font-family: "MicrosoftYaHei";
-    float: left;
-    display: block;
-    /* width: 1.42rem; */
-  }
+.team li {
+  list-style: none;
+  font-size: 0.34rem;
+  color: #fff4c6;
+  font-family: 'MicrosoftYaHei';
+  float: left;
+  display: block;
+  /* width: 1.42rem; */
+}
 
-  .team li:nth-child(2),
-  .team li:nth-child(3),
-  .team li:nth-child(4) {
-    margin-left: 5%;
-  }
+.team li:nth-child(2),
+.team li:nth-child(3),
+.team li:nth-child(4) {
+  margin-left: 5%;
+}
 
-  .team li div:nth-child(1) {
-    text-align: center;
-    margin-bottom: 0.15rem;
-  }
+.team li div:nth-child(1) {
+  text-align: center;
+  margin-bottom: 0.15rem;
+}
 
-  .team li div:nth-child(2) {
-    text-align: center;
-  }
+.team li div:nth-child(2) {
+  text-align: center;
+}
 
-  .team li div:nth-child(2) div {
-    height: 0.85rem;
-    line-height: 0.85rem;
-    background: url("../assets/img/img_index_fens.png") no-repeat;
-    font-weight: bold;
-    font-family: "FZLTZHK--GBK1-0";
-    font-size: 0.44rem;
-    color: #b72329;
-    background-size: 100% 100%;
-    width: 1.42rem;
-    display: inline-block;
-  }
+.team li div:nth-child(2) div {
+  height: 0.85rem;
+  line-height: 0.85rem;
+  background: url('../assets/img/img_index_fens.png') no-repeat;
+  font-weight: bold;
+  font-family: 'FZLTZHK--GBK1-0';
+  font-size: 0.44rem;
+  color: #b72329;
+  background-size: 100% 100%;
+  width: 1.42rem;
+  display: inline-block;
+}
 
-  .mcph {
-    margin: 0.1rem 0;
-    height: 1rem;
-  }
+.mcph {
+  margin: 0.1rem 0;
+  height: 1rem;
+}
 
-  .mcph img {
-    height: 1.2rem;
-  }
+.mcph img {
+  height: 1.2rem;
+}
 
-  .mctable {
-    padding: 0 1rem;
-  }
+.mctable {
+  padding: 0 1rem;
+}
 
-  .mctable table {
-    width: 100%;
-  }
+.mctable table {
+  width: 100%;
+}
 
-  .mctable tbody tr {
-    line-height: 0.4rem;
-  }
+.mctable tbody tr {
+  line-height: 0.4rem;
+}
 
-  .mctable th {
-    font-family: "SourceHanSerifSC-Heavy";
-    font-size: 0.34rem;
-    font-weight: bold;
-    color: #fff4c6;
-    text-align: center;
-  }
+.mctable th {
+  font-family: 'SourceHanSerifSC-Heavy';
+  font-size: 0.34rem;
+  font-weight: bold;
+  color: #fff4c6;
+  text-align: center;
+}
 
-  .mctable td {
-    font-family: "MicrosoftYaHei";
-    font-size: 0.28rem;
-    color: #f4e478;
-    text-align: center;
-    font-weight: 600;
-  }
+.mctable td {
+  font-family: 'MicrosoftYaHei';
+  font-size: 0.28rem;
+  color: #f4e478;
+  text-align: center;
+  font-weight: 600;
+}
 
-  .liw_left {
-    position: absolute;
-    top: 4rem;
-    left: -0.7rem;
-    width: 1.38rem;
-    height: 1.37rem;
-  }
+.liw_left {
+  position: absolute;
+  top: 4rem;
+  left: -0.7rem;
+  width: 1.38rem;
+  height: 1.37rem;
+}
 
-  .liw_right {
-    position: absolute;
-    top: 2.7rem;
-    right: -0.7rem;
-    width: 1.38rem;
-    height: 1.37rem;
-  }
+.liw_right {
+  position: absolute;
+  top: 2.7rem;
+  right: -0.7rem;
+  width: 1.38rem;
+  height: 1.37rem;
+}
 
-  .content2 {
-    width: 11.93rem;
-    height: 5.95rem;
-    position: relative;
-    text-align: center;
-    display: inline-block;
-  }
+.content2 {
+  width: 11.93rem;
+  height: 5.95rem;
+  position: relative;
+  text-align: center;
+  display: inline-block;
+}
 
-  .c2left {
-    width: 5.81rem;
-    height: 5.74rem;
-    background: url("../../src/assets/img/img_diz_bg.png") no-repeat;
-    background-size: 100% 100%;
-    display: inline-block;
-    overflow: auto;
-    position: relative;
-  }
+.c2left {
+  width: 5.81rem;
+  height: 5.74rem;
+  background: url('../../src/assets/img/img_diz_bg.png') no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  overflow: auto;
+  position: relative;
+}
 
-  .c2left .game {
-    position: absolute;
-    left: 5%;
-    top: 55%;
-    width: 0.84rem;
-    height: 0.87rem;
-  }
+.c2left .game {
+  position: absolute;
+  left: 5%;
+  top: 55%;
+  width: 0.84rem;
+  height: 0.87rem;
+}
 
-  .c2_liw_left {
-    position: absolute;
-    top: 3.8rem;
-    left: -0.7rem;
-    width: 1.38rem;
-    height: 1.37rem;
-  }
+.c2_liw_left {
+  position: absolute;
+  top: 3.8rem;
+  left: -0.7rem;
+  width: 1.38rem;
+  height: 1.37rem;
+}
 
-  .c2_liw_right {
-    position: absolute;
-    top: 2.7rem;
-    right: -0.7rem;
-    width: 1.38rem;
-    height: 1.37rem;
-  }
+.c2_liw_right {
+  position: absolute;
+  top: 2.7rem;
+  right: -0.7rem;
+  width: 1.38rem;
+  height: 1.37rem;
+}
 
-  .score {
-    margin-left: 20%;
-    margin-right: 10%;
-    margin-top: 20%;
-  }
+.score {
+  margin-left: 20%;
+  margin-right: 10%;
+  margin-top: 20%;
+}
 
-  .score table {
-    width: 100%;
-  }
+.score table {
+  width: 100%;
+}
 
-  .score table thead tr {
-    line-height: 60%;
-  }
+.score table thead tr {
+  line-height: 60%;
+}
 
-  .score table tbody tr {
-    line-height: 38%;
-  }
+.score table tbody tr {
+  line-height: 38%;
+}
 
-  .scorebody {
-    height: 3.6rem;
-    overflow: hidden;
-    display: inline-block;
-    width: 100%;
-  }
+.scorebody {
+  height: 3.6rem;
+  overflow: hidden;
+  display: inline-block;
+  width: 100%;
+}
 
-  .scorebody li {
-    height: 0.38rem;
-    line-height: 0.38rem;
-    font-size: 0.28rem;
-  }
+.scorebody li {
+  height: 0.38rem;
+  line-height: 0.38rem;
+  font-size: 0.28rem;
+}
 
-  .scorebody li span {
-    display: inline-block;
-    width: 1.32rem;
-    font-family: "MicrosoftYaHei";
-    font-weight: 700;
-    color: #fff4c6;
-  }
+.scorebody li span {
+  display: inline-block;
+  width: 1.32rem;
+  font-family: 'MicrosoftYaHei';
+  font-weight: 700;
+  color: #fff4c6;
+}
 
-  #scoretb {
-    height: 3.6rem;
-    overflow: hidden;
-  }
+#scoretb {
+  height: 3.6rem;
+  overflow: hidden;
+}
 
-  /* .scorebody table {
+/* .scorebody table {
   position: absolute;
 }
 
@@ -526,135 +520,135 @@
 .scorebody tr td {
   width: 1.88rem;
 } */
-  .c2left th {
-    font-family: "SourceHanSerifSC-Heavy";
-    font-size: 0.34rem;
-    font-weight: bold;
-    color: #fff4c6;
-    text-align: center;
-  }
+.c2left th {
+  font-family: 'SourceHanSerifSC-Heavy';
+  font-size: 0.34rem;
+  font-weight: bold;
+  color: #fff4c6;
+  text-align: center;
+}
 
-  .c2left td {
-    font-family: "MicrosoftYaHei";
-    font-size: 0.28rem;
-    font-weight: bold;
-    color: #fff4c6;
-    text-align: center;
-  }
+.c2left td {
+  font-family: 'MicrosoftYaHei';
+  font-size: 0.28rem;
+  font-weight: bold;
+  color: #fff4c6;
+  text-align: center;
+}
 
-  .c2right {
-    width: 5.81rem;
-    height: 5.9rem;
-    background: url("../../src/assets/img/img_wangz_bg.png") no-repeat;
-    background-size: 100% 100%;
-    display: inline-block;
-    margin-left: 0.3rem;
-    overflow: auto;
-    position: relative;
-  }
+.c2right {
+  width: 5.81rem;
+  height: 5.9rem;
+  background: url('../../src/assets/img/img_wangz_bg.png') no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+  margin-left: 0.3rem;
+  overflow: auto;
+  position: relative;
+}
 
-  .c2right .game {
-    position: absolute;
-    left: 5%;
-    top: 55%;
-    width: 0.84rem;
-    height: 0.87rem;
-  }
+.c2right .game {
+  position: absolute;
+  left: 5%;
+  top: 55%;
+  width: 0.84rem;
+  height: 0.87rem;
+}
 
-  .teamvs {
-    margin-left: 20%;
-    margin-right: 10%;
-    margin-top: 32%;
-    height: 3.6rem;
-    overflow: auto;
-  }
+.teamvs {
+  margin-left: 20%;
+  margin-right: 10%;
+  margin-top: 32%;
+  height: 3.6rem;
+  overflow: auto;
+}
 
-  .teamxq {
-    font-size: 0.3rem;
-    color: #fff4c6;
-    font-family: "MicrosoftYaHei";
-    font-weight: bold;
-    margin-top: 0.1rem;
-  }
+.teamxq {
+  font-size: 0.3rem;
+  color: #fff4c6;
+  font-family: 'MicrosoftYaHei';
+  font-weight: bold;
+  margin-top: 0.1rem;
+}
 
-  .teamxq span {
-    display: inline-block;
-    width: 1.2rem;
-    vertical-align: middle;
-  }
+.teamxq span {
+  display: inline-block;
+  width: 1.2rem;
+  vertical-align: middle;
+}
 
-  .teamxq span:nth-child(2) {
-    font-size: 0.48rem;
-    color: #fec414;
-    margin-left: 0.2rem;
-    margin-right: 0.2rem;
-  }
+.teamxq span:nth-child(2) {
+  font-size: 0.48rem;
+  color: #fec414;
+  margin-left: 0.2rem;
+  margin-right: 0.2rem;
+}
 
-  .teamxq::after {
-    display: inline-block;
-    content: '';
-    height: 100%;
-    vertical-align: middle;
-  }
+.teamxq::after {
+  display: inline-block;
+  content: '';
+  height: 100%;
+  vertical-align: middle;
+}
 
-  .grade {
-    font-size: 0.44rem;
-    margin-top: 0.1rem;
-  }
+.grade {
+  font-size: 0.44rem;
+  margin-top: 0.1rem;
+}
 
-  .grade span {
-    display: inline-block;
-    width: 0.75rem;
-    height: 0.76rem;
-    background: url("../../src/assets/img/img_wangze_bif_bg.png") no-repeat;
-    background-size: 100% 100%;
+.grade span {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.76rem;
+  background: url('../../src/assets/img/img_wangze_bif_bg.png') no-repeat;
+  background-size: 100% 100%;
 
-    color: #ffee79;
-    line-height: 0.76rem;
-    font-weight: bold;
-  }
+  color: #ffee79;
+  line-height: 0.76rem;
+  font-weight: bold;
+}
 
-  .play {
-    display: inline-block;
-    width: 0.6rem;
-    height: 0.6rem;
-    background: url("../assets/img/btn_index_play.png") no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    bottom: 1%;
-    right: 1%;
-  }
+.play {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: url('../assets/img/btn_index_play.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+}
 
-  .zant {
-    display: inline-block;
-    width: 0.6rem;
-    height: 0.6rem;
-    background: url("../assets/img/btn_index_zant.png") no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    bottom: 1%;
-    right: 1%;
-  }
+.zant {
+  display: inline-block;
+  width: 0.6rem;
+  height: 0.6rem;
+  background: url('../assets/img/btn_index_zant.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  bottom: 1%;
+  right: 1%;
+}
 
-  .prev {
-    display: inline-block;
-    width: 0.51rem;
-    height: 0.5rem;
-    background: url("../../src/assets/img/btn_index_left.png") no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    top: 40%;
-    left: 1%;
-  }
+.prev {
+  display: inline-block;
+  width: 0.51rem;
+  height: 0.5rem;
+  background: url('../../src/assets/img/btn_index_left.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 40%;
+  left: 1%;
+}
 
-  .next {
-    display: inline-block;
-    width: 0.51rem;
-    height: 0.5rem;
-    background: url("../../src/assets/img/btn_index_right.png") no-repeat;
-    background-size: 100% 100%;
-    position: absolute;
-    top: 40%;
-    right: 1%;
-  }
+.next {
+  display: inline-block;
+  width: 0.51rem;
+  height: 0.5rem;
+  background: url('../../src/assets/img/btn_index_right.png') no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  top: 40%;
+  right: 1%;
+}
 </style>

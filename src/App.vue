@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import $ from '@/assets/jquery-vendor.js'
 export default {
   name: 'app',
   components: {}

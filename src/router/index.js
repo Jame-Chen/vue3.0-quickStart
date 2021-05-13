@@ -25,15 +25,15 @@ const router = new Router({
       component: resolve => require(['@/views/Test.vue'], resolve)
     },
     {
-        path: '/hunj',
-        name: 'hunj',
-        meta: {
-          title: 'hunj',
-          auth: false, //需要登录
-          keepAlive: false
-        },
-        component: resolve => require(['@/views/hunj.vue'], resolve)
+      path: '/hunj',
+      name: 'hunj',
+      meta: {
+        title: 'hunj',
+        auth: false, //需要登录
+        keepAlive: false
       },
+      component: resolve => require(['@/views/hunj.vue'], resolve)
+    },
     {
       path: '/videoPlayer',
       name: 'videoPlayer',
@@ -43,6 +43,16 @@ const router = new Router({
         keepAlive: false
       },
       component: resolve => require(['@/views/videoPlayer.vue'], resolve)
+    },
+    {
+      path: '/Map',
+      name: 'Map',
+      meta: {
+        title: 'Map',
+        auth: false, //需要登录
+        keepAlive: false
+      },
+      component: resolve => require(['@/views/Map.vue'], resolve)
     }
   ]
 })

@@ -1,3 +1,34 @@
 <!DOCTYPE html><html lang=en><head><meta charset=utf-8><meta http-equiv=X-UA-Compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1"><link rel=icon href=favicon.ico><link href=https://unpkg.com/animate.css@3.5.2/animate.min.css rel=stylesheet type=text/css><title></title><style>html {
             font-size: calc(100vw / 13.66);
-        }</style><link href=static/js/chunk-569ceed4.0c0507e8.js rel=prefetch><link href=static/js/chunk-742ff888.a1335887.js rel=prefetch><link href=static/js/app.9021cb28.js rel=preload as=script><link href=static/js/chunk-vendors.7b982484.js rel=preload as=script></head><body><div id=app></div><script src=static/js/chunk-vendors.7b982484.js></script><script src=static/js/app.9021cb28.js></script></body></html>
+        }
+        html,body{
+          height: 100%;
+        }</style><script>window.onload=function IEVersion() {
+            var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串  
+            var isIE = userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1; //判断是否IE<11浏览器  
+            var isEdge = userAgent.indexOf("Edge") > -1 && !isIE; //判断是否IE的Edge浏览器  
+            var isIE11 = userAgent.indexOf('Trident') > -1 && userAgent.indexOf("rv:11.0") > -1;
+            if(isIE) {
+                var reIE = new RegExp("MSIE (\\d+\\.\\d+);");
+                reIE.test(userAgent);
+                var fIEVersion = parseFloat(RegExp["$1"]);
+                if(fIEVersion == 7) {
+                    return 7;
+                } else if(fIEVersion == 8) {
+                    return 8;
+                } else if(fIEVersion == 9) {
+                    return 9;
+                } else if(fIEVersion == 10) {
+                    return 10;
+                } else {
+                    return 6;//IE版本<=7
+                }   
+               
+            } else if(isEdge) {
+                return 'edge';//edge
+            } else if(isIE11) {
+                return 11; //IE11  
+            }else{
+                return -1;//不是ie浏览器
+            }
+        }</script><link href=static/js/chunk-0321625d.67f0f0f9.js rel=prefetch><link href=static/js/chunk-264741ce.0b24a71a.js rel=prefetch><link href=static/js/chunk-30bfa1e2.446934d1.js rel=prefetch><link href=static/js/chunk-38754dc7.5255d797.js rel=prefetch><link href=static/js/chunk-58ac4bd4.08676621.js rel=prefetch><link href=static/js/chunk-6dc29e8e.3acef79a.js rel=prefetch><link href=static/js/chunk-7a4b5254.b8e84dcb.js rel=prefetch><link href=static/js/app.813c84a8.js rel=preload as=script><link href=static/js/chunk-vendors.b4c4ef3b.js rel=preload as=script></head><body><div id=app></div><script src=static/js/chunk-vendors.b4c4ef3b.js></script><script src=static/js/app.813c84a8.js></script></body></html>

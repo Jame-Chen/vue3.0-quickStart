@@ -4,10 +4,7 @@ import bus from '@/assets/js/eventBus.js'
 import axios from 'axios'
 import moment from 'moment'
 // import common from './common.js'
-import { Message, MessageBox } from 'element-ui'
-// import { getEmergencyPersonByState } from '@/api/Emergency.js'
-// import { getAllPlanRoad } from '@/api/Dredge.js'
-// import { getPatrolGpsHistory, getEvnetInfoByCode } from '@/api/RoadWatch.js'
+import { Message } from 'element-ui'
 export default {
   name: 'ArcgisMap',
   gisConstructor: {}, //gis 构造函数
@@ -19,12 +16,6 @@ export default {
     interface: [],
     drawLayers: []
   }, // gis 实例
-  map: {}, //地图
-  // mapLayers:{},
-  // mapEvent:{},
-  // gisModules: [],
-  // mapLibs:{},
-  // defaultSetting:{},
   checkedLayer: [], //图层控制已选的图层集合
   layerConfigData: [], //保存图层控制中设施图层的数据
   layerQueryParam: {}, //保存当前选中的参数条件
@@ -41,29 +32,28 @@ export default {
       ]
     }
   },
-  initModule() {
-    var that = this
-    // 加载css;
-    loadCss(settingTemplate.arcgisCssURL)
-    // 加载模块
-    loadModules(settingTemplate.gisModules, that.arcgisConfig).then(args => {
-      // 注意大小写，3.x 的API感觉有点乱，API文件的开头有大写有小写，注意一定对应起来，
-      for (let k in args) {
-        let name = settingTemplate.gisModules[k].split('/').pop()
-        that.gisConstructor[name] = args[k]
-      }
-    })
-  },
+  // initModule() {
+  //   var that = this
+  //   // 加载css;
+  //   loadCss(settingTemplate.arcgisCssURL)
+  //   // 加载模块
+  //   loadModules(settingTemplate.gisModules, that.arcgisConfig).then(args => {
+  //     // 注意大小写，3.x 的API感觉有点乱，API文件的开头有大写有小写，注意一定对应起来，
+  //     for (let k in args) {
+  //       let name = settingTemplate.gisModules[k].split('/').pop()
+  //       that.gisConstructor[name] = args[k]
+  //     }
+  //   })
+  // },
   init(mapId, f) {
     var that = this
     // 加载css;
-    loadCss(settingTemplate.arcgisCssURL);
+    loadCss(settingTemplate.arcgisCssURL)
     // 加载模块
     loadModules(settingTemplate.gisModules, that.arcgisConfig).then(function(args) {
       // 注意大小写，3.x 的API感觉有点乱，API文件的开头有大写有小写，注意一定对应起来，
       for (let k in args) {
         let name = settingTemplate.gisModules[k].split('/').pop()
-
         that.gisConstructor[name] = args[k]
       }
       if (that.gisInst.map) {
@@ -83,6 +73,7 @@ export default {
       })
       that.gisInst.map = map
       var layers = settingTemplate.baseMapLayers
+      // console.log('layers', layers)
       layers.forEach(layer => {
         if (layer.type == 'tile') {
           let tiledLayer = new that.gisConstructor.ArcGISTiledMapServiceLayer(layer.url, { id: layer.id })
@@ -97,7 +88,23 @@ export default {
           that.gisInst.map.addLayer(dynamicLayer, 3)
         }
       })
-
+      //比例尺
+      var scalebar = new that.gisConstructor.Scalebar({
+        map: map, //地图对象
+        attachTo: 'bottom-center', //控件的位置
+        scalebarStyle: 'line', //line 比例尺样式类型
+        scalebarUnit: 'metric' //显示地图的单位，这里是km
+      })
+      //鹰眼
+      var overviewMapDijit = new that.gisConstructor.OverviewMap({
+        map: map,
+        expandFactor: 2,
+        attachTo: 'bottom-right',
+        visible: true,
+        width: 200,
+        height: 100
+      })
+      overviewMapDijit.startup()
       if (f) {
         f(map)
       }
@@ -119,6 +126,7 @@ export default {
     that.gisInst.map.addLayer(dynamicLayer, 3)
     that.gisInst[layerId] = dynamicLayer
   },
+
   loadCheckedLayerOnMap(val, checked, tableId) {
     var that = this
     if (checked) {
@@ -202,30 +210,30 @@ export default {
    */
   setMapvisibleLayer(layerIds, layerId, layerDefinitions) {
     var that = this
-    var interval = setInterval(function() {
-      if (that.gisInst.map) {
-        window.clearInterval(interval)
-        var layer = that.gisInst.map.getLayer(layerId)
-        if (layer) {
-          if (layerIds.length > 0) {
-            if (layerDefinitions) {
-              layer.setVisibility(true)
-              layer.setVisibleLayers(layerIds)
-              layer.setLayerDefinitions(layerDefinitions)
-            } else {
-              layer.setVisibility(true)
-              layer.setVisibleLayers(layerIds)
-            }
-          } else {
-            layer.setVisibility(false)
+    // var interval = setInterval(function() {
+    if (that.gisInst.map) {
+      // window.clearInterval(interval)
+      var layer = that.gisInst.map.getLayer(layerId)
+      if (layer) {
+        if (layerIds.length > 0) {
+          if (layerDefinitions) {
+            layer.setVisibility(true)
             layer.setVisibleLayers(layerIds)
-            layer.setLayerDefinitions([])
+            layer.setLayerDefinitions(layerDefinitions)
+          } else {
+            layer.setVisibility(true)
+            layer.setVisibleLayers(layerIds)
           }
+        } else {
+          layer.setVisibility(false)
+          layer.setVisibleLayers(layerIds)
+          layer.setLayerDefinitions([])
         }
-      } else {
-        return
       }
-    }, 500)
+    } else {
+      return
+    }
+    // }, 500)
   },
   keyWordSearch(queryString, f) {
     var that = this
