@@ -5,7 +5,7 @@ const router = new Router({
   // mode:'history',
   routes: [
     {
-      path: '/index',
+      path: '/',
       name: 'index',
       meta: {
         title: 'index',
@@ -14,16 +14,7 @@ const router = new Router({
       },
       component: resolve => require(['@/views/index.vue'], resolve)
     },
-    {
-      path: '/',
-      name: 'test',
-      meta: {
-        title: 'test',
-        auth: false, //需要登录
-        keepAlive: false
-      },
-      component: resolve => require(['@/views/Test.vue'], resolve)
-    },
+
     {
       path: '/hunj',
       name: 'hunj',
