@@ -6,8 +6,8 @@ import Vuex from 'vuex'
 import axios from './http/index'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import '@/assets/elementUI/elementUI.scss'
 import * as echarts from 'echarts'
-// import BMap from 'vue-baidu-map'
 import VideoPlayer from 'vue-video-player'
 
 Vue.prototype.$echarts = echarts
